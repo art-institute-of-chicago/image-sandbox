@@ -8,6 +8,7 @@ fi
 DIR_SCRIPT="$(dirname "${BASH_SOURCE[0]}")"
 DIR_IMAGES="$DIR_SCRIPT/images"
 DIR_IMAGES_DOWNLOADED="$DIR_IMAGES/downloaded"
+DIR_IMAGES_RECOMPRESSED="$DIR_IMAGES/recompressed"
 
 FILE_RESPONSE='/tmp/aic-images-download.json'
 API_URL='https://api.artic.edu/api/v1/search'
@@ -33,6 +34,21 @@ API_RESPONSE="$(cat "$FILE_RESPONSE")"
 API_COUNT="$(echo "$API_RESPONSE" | jq -r '.data | length')"
 
 IMAGE_SIZES=(200 400 600 843 1686)
+
+for IMAGE_SIZE in "${IMAGE_SIZES[@]}"; do
+    if [ ! -d "$DIR_IMAGES_DOWNLOADED/$IMAGE_SIZE" ]; then
+        mkdir "$DIR_IMAGES_DOWNLOADED/$IMAGE_SIZE"
+    fi
+    if [ ! -d "$DIR_IMAGES_RECOMPRESSED/$IMAGE_SIZE" ]; then
+        mkdir "$DIR_IMAGES_RECOMPRESSED/$IMAGE_SIZE"
+    fi
+done
+
+for IMAGE_SIZE in "${IMAGE_SIZES[@]}"; do
+    if [ ! -d "$DIR_IMAGES_DOWNLOADED/$IMAGE_SIZE" ]; then
+        mkdir "$DIR_IMAGES_DOWNLOADED/$IMAGE_SIZE"
+    fi
+done
 
 for API_INDEX in $(seq $API_COUNT); do
     IMAGE_ID="$(echo "$API_RESPONSE" | jq -r ".data[$API_INDEX].image_id")"
