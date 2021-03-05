@@ -44,12 +44,6 @@ for IMAGE_SIZE in "${IMAGE_SIZES[@]}"; do
     fi
 done
 
-for IMAGE_SIZE in "${IMAGE_SIZES[@]}"; do
-    if [ ! -d "$DIR_IMAGES_DOWNLOADED/$IMAGE_SIZE" ]; then
-        mkdir "$DIR_IMAGES_DOWNLOADED/$IMAGE_SIZE"
-    fi
-done
-
 for API_INDEX in $(seq $API_COUNT); do
     IMAGE_ID="$(echo "$API_RESPONSE" | jq -r ".data[$API_INDEX].image_id")"
 
