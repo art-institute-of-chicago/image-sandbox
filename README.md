@@ -59,4 +59,5 @@ $ ./compare.sh q95 recompressed
 600: From 7.6M to 5.7M (75.14% of original) (File count: 49, 49)
 843: From 14M to 11M (74.59% of original) (File count: 49, 49)
 1686: From 21M to 13M (60.58% of original) (File count: 19, 19)
+3000: From 47M to 23M (49.22% of original) (File count: 19, 19)
 ```

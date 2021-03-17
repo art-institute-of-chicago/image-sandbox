@@ -33,7 +33,7 @@ fi
 API_RESPONSE="$(cat "$FILE_RESPONSE")"
 API_COUNT="$(echo "$API_RESPONSE" | jq -r '.data | length')"
 
-IMAGE_SIZES=(200 400 600 843 1686)
+IMAGE_SIZES=(200 400 600 843 1686 3000)
 
 for IMAGE_SIZE in "${IMAGE_SIZES[@]}"; do
     if [ ! -d "$DIR_IMAGES_DOWNLOADED/$IMAGE_SIZE" ]; then
@@ -59,7 +59,13 @@ for API_INDEX in $(seq $API_COUNT); do
         if [ "$IMAGE_SIZE" -lt "844" ] || [ "$IS_PUBLIC_DOMAIN" == 'true' ]; then
             echo "$FILE_IMAGE downloading"
 
-            STATUS="$(curl -s "https://lakeimagesweb.artic.edu/iiif/2/$IMAGE_ID/full/$IMAGE_SIZE,/0/default.jpg" -w %{http_code} -m 5 --output "$FILE_IMAGE")"
+            if [ "$IMAGE_SIZE" -eq "3000" ]; then
+                IMAGE_SIZE_URL='!3000,3000'
+            else
+                IMAGE_SIZE_URL="$IMAGE_SIZE,"
+            fi
+
+            STATUS="$(curl -s "https://lakeimagesweb.artic.edu/iiif/2/$IMAGE_ID/full/$IMAGE_SIZE_URL/0/default.jpg" -w %{http_code} -m 5 --output "$FILE_IMAGE")"
 
             if [ ! "$STATUS" = "200" ]; then
                 echo "Sorry, we are having trouble downloading the image. Try again later!" >&2
