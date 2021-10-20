@@ -56,11 +56,11 @@ for API_INDEX in $(seq $API_COUNT); do
     FILE_IMAGE="$DIR_IMAGES_DOWNLOADED/$IMAGE_ID.jpg"
 
     if [ "$IMAGE_SIZE" -lt "844" ] || [ "$IS_PUBLIC_DOMAIN" == 'true' ]; then
-            echo "$FILE_IMAGE downloading"
+        echo "$FILE_IMAGE downloading"
 
         if [ "$IMAGE_SIZE" -eq "3000" ]; then
             IMAGE_SIZE_URL='!3000,3000'
-    	else
+        else
             IMAGE_SIZE_URL="$IMAGE_SIZE,"
         fi
 
