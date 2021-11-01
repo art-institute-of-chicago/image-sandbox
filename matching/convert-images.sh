@@ -16,7 +16,7 @@ DIR_IMAGES_DOWNLOADED="$DIR_IMAGES/downloaded"
 
 IMAGE_SIZE=843
 
-IMAGE_CONVERTS=("scale-proportional" "scale-disproportional" "crop" "rotate" "color-shift")
+IMAGE_CONVERTS=("scale-proportional" "scale-disproportional" "crop" "rotate" "color-shift" "change-exif")
 for IMAGE_CONVERT in "${IMAGE_CONVERTS[@]}"; do
     if [ ! -d "$DIR_IMAGES/$IMAGE_CONVERT" ]; then
         mkdir "$DIR_IMAGES/$IMAGE_CONVERT"
@@ -53,8 +53,10 @@ for IMAGE_SCALE_DISP in "${IMAGE_SCALE_DISPS[@]}"; do
     mogrify -resize $IMAGE_SCALE_DISP! -path "$DIR_IMAGES/scale-disproportional/$IMAGE_SCALE_DISP" "$DIR_IMAGES_DOWNLOADED/"*.jpg
 done
 
-IMAGE_EXIFS=("Comment")
 if [ -d "$DIR_IMAGES_DOWNLOADED" ]; then
-    cp -r "$DIR_IMAGES_DOWNLOADED" "$DIR_IMAGES/change-exif"
-    exiftool -Comment="exif edited" "$DIR_IMAGES/change-exif"
+    if [ "$(ls -A "$DIR_IMAGES/change-exif")" ]; then
+        rm -r "$DIR_IMAGES/change-exif"
+        mkdir "$DIR_IMAGES/change-exif"
+    fi
+    exiftool -Comment="exif edited" -o "$DIR_IMAGES/change-exif" "$DIR_IMAGES_DOWNLOADED"
 fi
