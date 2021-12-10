@@ -3,6 +3,7 @@ import dummy_matching
 import os
 from unittest import TestCase
 import random
+import argparse
 match = dummy_matching.dummy_matching
 NUM_TESTS = 2
 
@@ -114,15 +115,18 @@ class FullTestSuite(TestCase):
 
 
 def run_testsuite():
-    test_classes = [QuickTestSuite, FullTestSuite]
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--full", help="run full test suite",
+                        action="store_true")
+    args = parser.parse_args()
+    if args.full:
+        test_class = FullTestSuite
+    else:
+        test_class = QuickTestSuite
     loader = unittest.TestLoader()
     runner = unittest.TextTestRunner()
-    list_suites = []
-    for test in test_classes:
-        current_suite = loader.loadTestsFromTestCase(test)
-        list_suites.append(current_suite)
-
-    test_suite = unittest.TestSuite(list_suites)
+    current_suite = loader.loadTestsFromTestCase(test_class)
+    test_suite = unittest.TestSuite(current_suite)
     results = runner.run(test_suite)
     return results
 
