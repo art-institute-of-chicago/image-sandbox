@@ -20,13 +20,12 @@ class QuickTestSuite(TestCase):
         result = match.match_image(file)
         self.assertEqual(result, file)
 
-    def test_rotate(self):
-        rotate_path = "../matching/images/rotate"
-        directory = os.listdir(rotate_path)
+    def shared_quick_test(self, dir_path):
+        directory = os.listdir(dir_path)
         for k in range(len(directory)):
             current_dir = directory[k]
             if current_dir != ".DS_Store":
-                folder_path = rotate_path + "/" + str(current_dir)
+                folder_path = dir_path + "/" + str(current_dir)
                 images = os.listdir(folder_path)
                 for i in range(1, NUM_TESTS+1):
                     current_image = random.choice(images)
@@ -34,67 +33,26 @@ class QuickTestSuite(TestCase):
                     result = match.match_image(image_path)
                     with self.subTest(i=("QuickTestSuite", NUM_TESTS*k+i)):
                         self.assertEqual(result, current_image)
+
+    def test_rotate(self):
+        rotate_path = "../matching/images/rotate"
+        self.shared_quick_test(rotate_path)
 
     def test_crop(self):
         crop_path = "../matching/images/crop"
-        directory = os.listdir(crop_path)
-        for k in range(len(directory)):
-            current_dir = directory[k]
-            if current_dir != ".DS_Store":
-                folder_path = crop_path + "/" + str(current_dir)
-                images = os.listdir(folder_path)
-                for i in range(1, NUM_TESTS+1):
-                    current_image = random.choice(images)
-                    image_path = folder_path + "/" + str(current_image)
-                    result = match.match_image(image_path)
-                    with self.subTest(i=("QuickTestSuite", NUM_TESTS*k+i)):
-                        self.assertEqual(result, current_image)
+        self.shared_quick_test(crop_path)
 
     def test_color_shifted(self):
         color_shift_path = "../matching/images/color-shift"
-        directory = os.listdir(color_shift_path)
-        for k in range(len(directory)):
-            current_dir = directory[k]
-            if current_dir != ".DS_Store":
-                folder_path = color_shift_path + "/" + str(current_dir)
-                images = os.listdir(folder_path)
-                for i in range(1, NUM_TESTS+1):
-                    current_image = random.choice(images)
-                    image_path = folder_path + "/" + str(current_image)
-                    result = match.match_image(image_path)
-                    with self.subTest(i=("QuickTestSuite", NUM_TESTS*k+i)):
-                        self.assertEqual(result, current_image)
+        self.shared_quick_test(color_shift_path)
 
     def test_scale_proportional(self):
         scale_proportional_path = "../matching/images/scale-proportional"
-        directory = os.listdir(scale_proportional_path)
-        for k in range(len(directory)):
-            current_dir = directory[k]
-            if current_dir != ".DS_Store":
-                folder_path = scale_proportional_path + "/" + str(current_dir)
-                images = os.listdir(folder_path)
-                for i in range(1, NUM_TESTS+1):
-                    current_image = random.choice(images)
-                    image_path = folder_path + "/" + str(current_image)
-                    result = match.match_image(image_path)
-                    with self.subTest(i=("QuickTestSuite", NUM_TESTS*k+i)):
-                        self.assertEqual(result, current_image)
+        self.shared_quick_test(scale_proportional_path)
 
     def test_scale_disproportional(self):
         scale_disproportional_path = "../matching/images/scale-disproportional"
-        directory = os.listdir(scale_disproportional_path)
-        for k in range(len(directory)):
-            current_dir = directory[k]
-            if current_dir != ".DS_Store":
-                folder_path = (
-                    scale_disproportional_path + "/" + str(current_dir))
-                images = os.listdir(folder_path)
-                for i in range(1, NUM_TESTS+1):
-                    current_image = random.choice(images)
-                    image_path = folder_path + "/" + str(current_image)
-                    result = match.match_image(image_path)
-                    with self.subTest(i=("QuickTestSuite", NUM_TESTS*k+i)):
-                        self.assertEqual(result, current_image)
+        self.shared_quick_test(scale_disproportional_path)
 
     def test_change_exif(self):
         change_exif_path = "../matching/images/change-exif"
@@ -108,14 +66,13 @@ class QuickTestSuite(TestCase):
 
 
 class FullTestSuite(TestCase):
-    def test_rotate(self):
-        rotate_path = "../matching/images/rotate"
-        directory = os.listdir(rotate_path)
+    def shared_full_test(self, dir_path):
+        directory = os.listdir(dir_path)
         test_index = 0
         for k in range(len(directory)):
             current_dir = directory[k]
             if current_dir != ".DS_Store":
-                folder_path = rotate_path + "/" + str(current_dir)
+                folder_path = dir_path + "/" + str(current_dir)
                 images = os.listdir(folder_path)
                 for i in range(len(images)):
                     current_image = images[i]
@@ -124,75 +81,26 @@ class FullTestSuite(TestCase):
                     with self.subTest(i=("FullTestSuite", test_index)):
                         self.assertEqual(result, current_image)
                     test_index += 1
+
+    def test_rotate(self):
+        rotate_path = "../matching/images/rotate"
+        self.shared_full_test(rotate_path)
 
     def test_crop(self):
         crop_path = "../matching/images/crop"
-        directory = os.listdir(crop_path)
-        test_index = 0
-        for k in range(len(directory)):
-            current_dir = directory[k]
-            if current_dir != ".DS_Store":
-                folder_path = crop_path + "/" + str(current_dir)
-                images = os.listdir(folder_path)
-                for i in range(len(images)):
-                    current_image = images[i]
-                    image_path = folder_path + "/" + str(current_image)
-                    result = match.match_image(image_path)
-                    with self.subTest(i=("FullTestSuite", test_index)):
-                        self.assertEqual(result, current_image)
-                    test_index += 1
+        self.shared_full_test(crop_path)
 
     def test_color_shifted(self):
         color_shift_path = "../matching/images/color-shift"
-        directory = os.listdir(color_shift_path)
-        test_index = 0
-        for k in range(len(directory)):
-            current_dir = directory[k]
-            if current_dir != ".DS_Store":
-                folder_path = color_shift_path + "/" + str(current_dir)
-                images = os.listdir(folder_path)
-                for i in range(len(images)):
-                    current_image = images[i]
-                    image_path = folder_path + "/" + str(current_image)
-                    result = match.match_image(image_path)
-                    with self.subTest(i=("FullTestSuite", test_index)):
-                        self.assertEqual(result, current_image)
-                    test_index += 1
+        self.shared_full_test(color_shift_path)
 
     def test_scale_proportional(self):
         scale_proportional_path = "../matching/images/scale-proportional"
-        directory = os.listdir(scale_proportional_path)
-        test_index = 0
-        for k in range(len(directory)):
-            current_dir = directory[k]
-            if current_dir != ".DS_Store":
-                folder_path = scale_proportional_path + "/" + str(current_dir)
-                images = os.listdir(folder_path)
-                for i in range(len(images)):
-                    current_image = images[i]
-                    image_path = folder_path + "/" + str(current_image)
-                    result = match.match_image(image_path)
-                    with self.subTest(i=("FullTestSuite", test_index)):
-                        self.assertEqual(result, current_image)
-                    test_index += 1
+        self.shared_full_test(scale_proportional_path)
 
     def test_scale_disproportional(self):
         scale_disproportional_path = "../matching/images/scale-disproportional"
-        directory = os.listdir(scale_disproportional_path)
-        test_index = 0
-        for k in range(len(directory)):
-            current_dir = directory[k]
-            if current_dir != ".DS_Store":
-                folder_path = (
-                    scale_disproportional_path + "/" + str(current_dir))
-                images = os.listdir(folder_path)
-                for i in range(len(images)):
-                    current_image = images[i]
-                    image_path = folder_path + "/" + str(current_image)
-                    result = match.match_image(image_path)
-                    with self.subTest(i=("FullTestSuite", test_index)):
-                        self.assertEqual(result, current_image)
-                    test_index += 1
+        self.shared_full_test(scale_disproportional_path)
 
     def test_change_exif(self):
         change_exif_path = "../matching/images/change-exif"
