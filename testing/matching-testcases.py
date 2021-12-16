@@ -27,9 +27,11 @@ class QuickTestSuite(TestCase):
             current_dir = directory[k]
             if current_dir != ".DS_Store":
                 folder_path = dir_path + "/" + str(current_dir)
-                images = os.listdir(folder_path)
+                images = [x for x in os.listdir(folder_path) if
+                          x.endswith(".jpg")]
                 for i in range(1, NUM_TESTS+1):
                     current_image = random.choice(images)
+                    current_image = current_image.split(".", 1)[0]
                     image_path = folder_path + "/" + str(current_image)
                     result = match.match_image(image_path)
                     with self.subTest(i=("QuickTestSuite", NUM_TESTS*k+i)):
@@ -74,9 +76,11 @@ class FullTestSuite(TestCase):
             current_dir = directory[k]
             if current_dir != ".DS_Store":
                 folder_path = dir_path + "/" + str(current_dir)
-                images = os.listdir(folder_path)
+                images = [x for x in os.listdir(folder_path) if
+                          x.endswith(".jpg")]
                 for i in range(len(images)):
                     current_image = images[i]
+                    current_image = current_image.split(".", 1)[0]
                     image_path = folder_path + "/" + str(current_image)
                     result = match.match_image(image_path)
                     with self.subTest(i=("FullTestSuite", test_index)):
