@@ -75,9 +75,13 @@ function checkPixelRatio() {
 }
 
 function checkEverything() {
-  let warning = checkBrowser() || checkPixelRatio();
-  if (warning) {
-    notification.innerText = warning;
+  let warnings = [
+    checkBrowser(),
+    checkPixelRatio(),
+  ].filter(i => i);
+
+  if (warnings.length > 0) {
+    notification.innerText = warnings.join(' ');
     notification.classList.remove('notification--hidden');
   } else {
     notification.classList.add('notification--hidden');
