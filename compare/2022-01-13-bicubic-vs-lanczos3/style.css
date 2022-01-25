@@ -1,0 +1,74 @@
+html,
+body,
+/* .app-container, */
+.viewer-container,
+.viewer {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container {
+  overflow: hidden;
+}
+
+.title,
+.notification {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  color: white;
+  padding: 5px 10px;
+}
+
+.title {
+  background-color: #7e746d;
+}
+
+.notification {
+  background-color: #cc2445;
+}
+
+.notification--hidden {
+  display: none;
+}
+
+.app-container {
+  display: flex;
+  flex: 1;
+}
+
+#image-selector {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#image-selector img {
+  cursor: pointer;
+  width: 200px;
+  max-height: 200px;
+  object-fit: contain;
+  padding: 5px;
+}
+
+.viewer-container {
+  display: flex;
+  flex: 1;
+}
+
+.viewer {
+  flex: 1;
+  outline: 0;
+}
+
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    transform: translateZ(0);
+}
