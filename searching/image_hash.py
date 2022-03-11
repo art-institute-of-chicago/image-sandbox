@@ -30,7 +30,7 @@ class image_hash():
         image_hashes = {}
         for image in image_directory:
             path = FILE_PATH + '/' + image
-            hashes = [(name, str(hashfuncopener(path))) for name,
+            hashes = [(name, hashfuncopener(path)) for name,
                       hashfuncopener in hashfuncopeners]
             image_hashes[image] = hashes
         return image_hashes

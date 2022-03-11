@@ -13,19 +13,31 @@ class store_hash():
             # store_hash.insert_hashes()
 
         else:
+            hash_fields = {}
+
+            for i in range(64):
+                hash_fields['hash_' + str(i)] = {
+                    'type': 'boolean'
+                }
+
+            properties = {
+                'image_file_name': {'type': 'keyword'},
+                'hash_type': {'type': 'keyword'},
+            }
+
+            properties.update(hash_fields)
+
             # create hash storage index
             request_body = {
-                    "settings": {
-                        "number_of_shards": 1
-                    },
+                'settings': {
+                    'number_of_shards': 1
+                },
 
-                    'mappings': {
-                        'image': {
-                            'properties': {
-                                'image_file_name': {'type': 'keyword'},
-                                'hash_type': {'type': 'keyword'},
-                                'image_hash': {'type': 'text'}
-                            }}}
+                'mappings': {
+                    'image': {
+                        'properties': properties
+                    }
+                }
             }
             print("creating 'hash_index' index...")
             es.indices.create(index='hash_index', body=request_body)
@@ -45,14 +57,30 @@ class store_hash():
             curr_hashes = image_hashes[curr_image]
             hash_type = curr_hashes[0][0]
             curr_hash = curr_hashes[0][1]
+
             print(curr_image, hash_type, curr_hash)
+
+            # https://github.com/JohannesBuchner/imagehash/issues/51
+            # https://stackoverflow.com/questions/61791924
+            curr_hash_flattened = curr_hash.hash.flatten().tolist()
+            hash_fields = {}
+
+            for i in range(len(curr_hash_flattened)):
+                hash_fields['hash_' + str(i)] = curr_hash_flattened[i]
+
             data_dict = {
                 'image_file_name': curr_image,
                 'hash_type': hash_type,
-                'image_hash': curr_hash
             }
-            res = es.index(index='hash_index',
-                           doc_type='image', body=data_dict)
+
+            data_dict.update(hash_fields)
+
+            res = es.index(
+                index='hash_index',
+                doc_type='image',
+                body=data_dict
+            )
+
             print("\n", res)
             print(dir(res))
 
