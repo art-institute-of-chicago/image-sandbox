@@ -3,7 +3,7 @@
 # requirements.lock should be generated with pip freeze
 Pillow==8.1.0
 ImageHash==4.0
-elasticsearch==8.1.0
+elasticsearch==6.3.1
 ## The following requirements were added by pip freeze:
 certifi==2021.10.8
 elastic-transport==8.1.0
