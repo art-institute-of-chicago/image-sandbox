@@ -36,10 +36,13 @@ class search_hash():
         image_hash = search_hash.get_hash(file_path)
         query = search_hash.create_query(image_hash)
         res = es.search(index="hash_index", doc_type="image", body=query)
-        # print(res['hits']['hits'][0]['_source']['image_file_name'])
         num_hits = res['hits']['total']
         if (num_hits < 1):
             return("no match")
         else:
             output_match = res['hits']['hits'][0]['_source']['image_file_name']
             return output_match
+
+
+if __name__ == "__main__":
+    print(search_hash.match_image(sys.argv[1]))
