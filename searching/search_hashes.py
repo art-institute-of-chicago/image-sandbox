@@ -1,9 +1,6 @@
 import sys
 import image_hash
-import json
 from elasticsearch import Elasticsearch
-import datetime
-import re
 from PIL import Image
 import imagehash
 
@@ -17,7 +14,6 @@ class search_hash():
         # https://github.com/JohannesBuchner/imagehash/issues/51
         # https://stackoverflow.com/questions/61791924
         curr_hash_flattened = image_hash.hash.flatten().tolist()
-        hash_fields = {}
 
         hash_fields = []
         for i in range(len(curr_hash_flattened)):
@@ -26,12 +22,12 @@ class search_hash():
             hash_fields.append(term)
 
         query_dict = {
-                'query': {
-                    'bool': {
-                        'minimum_should_match': "80%",
-                        'should': hash_fields
-                    }
+            'query': {
+                'bool': {
+                    'minimum_should_match': '80%',
+                    'should': hash_fields
                 }
+            }
         }
         return query_dict
 
