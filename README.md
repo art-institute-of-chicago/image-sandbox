@@ -56,6 +56,14 @@ https://art-institute-of-chicago.atlassian.net/wiki/spaces/DD/pages/24477699/Set
 
 Once you have set up Homestead and Elasticsearch run Homestead in vagrant to get local host output.
 
+Make sure to forward port from your host to Homestead and to have the correct ports set up. Currently, the code uses port 2200 in search_hashes.py and store_hashes.py scripts. Make sure to alter these ports either in your Homestead.yaml file or the appropriate scripts to match.
+
+```shell
+ports:
+    - send: 2200
+      to: 2200
+      protocol: tcp
+```
 ## Developing
 
 To start developing further, clone the repository and download the given requirements:
@@ -65,48 +73,11 @@ git clone https://github.com/art-institute-of-chicago/image-sandbox.git
 pip -r requirements.lock
 ```
 
-## Contributing
-
-We encourage your contributions. Please fork this repository and make your changes in a separate branch. To better understand how we organize our code, please review our [version control guidelines](https://docs.google.com/document/d/1B-27HBUc6LDYHwvxp3ILUcPTo67VFIGwo5Hiq4J9Jjw).
-
-```bash
-# Clone the repo to your computer
-git clone https://github.com/art-institute-of-chicago/image-sandbox.git
-
-# Enter the folder that was created by the clone
-cd image-sandbox
-
-# Install requirements
-pip -r requirements.lock
-
-# Start a feature branch
-git checkout -b feature/good-short-description
-
-# ... make some changes, commit your code
-
-# Push your branch to GitHub
-git push origin feature/good-short-description
-```
-
-Then on github.com, create a Pull Request to merge your changes into our
-`develop` branch.
-
-This project is released with a Contributor Code of Conduct. By participating in
-this project you agree to abide by its [terms](CODE_OF_CONDUCT.md).
-
-We welcome bug reports and questions under GitHub's [Issues](issues). For other concerns, you can reach our engineering team at [engineering@artic.edu](mailto:engineering@artic.edu)
-
-If there's anything else a developer needs to know (e.g. the code style
-guide), you should link it here. If there's a lot of things to take into
-consideration, separate this section to its own file called `CONTRIBUTING.md`
-and say that it exists here.
-
 ## Acknowledgements
 
-Name who designed and developed this project. Reference someone's code you used,
-list contributors, insert an external link or thank people. If there's a lot to
-inclue here, separate this section to its own file called `CONTRIBUTORS.md` and
-say that it exists here.
+The following sources have been referenced in the development of the store_hashes.py and search_hashes.py scripts.
+https://github.com/JohannesBuchner/imagehash/issues/51
+https://stackoverflow.com/questions/61791924/how-do-i-convert-an-array-of-numpy-booleans-to-python-booleans-for-serialization
 
 ## Licensing
 
