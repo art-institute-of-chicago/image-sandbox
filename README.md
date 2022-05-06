@@ -56,12 +56,12 @@ https://art-institute-of-chicago.atlassian.net/wiki/spaces/DD/pages/24477699/Set
 
 Once you have set up Homestead and Elasticsearch run Homestead in vagrant to get local host output.
 
-Make sure to forward port from your host to Homestead and to have the correct ports set up. Currently, the code uses port 2200 in search_hashes.py and store_hashes.py scripts. Make sure to alter these ports either in your Homestead.yaml file or the appropriate scripts to match.
+Make sure to forward your Elasticsearch port from your host to Homestead and to have the correct ports set up. Currently, the code uses port 2200 in search_hashes.py and store_hashes.py scripts. Make sure to alter these ports either in your Homestead.yaml file or the appropriate scripts to match.
 
 ```shell
 ports:
     - send: 2200
-      to: 2200
+      to: 9200
       protocol: tcp
 ```
 ## Developing
@@ -76,8 +76,8 @@ pip -r requirements.lock
 ## Acknowledgements
 
 The following sources have been referenced in the development of the store_hashes.py and search_hashes.py scripts.
-https://github.com/JohannesBuchner/imagehash/issues/51
-https://stackoverflow.com/questions/61791924/how-do-i-convert-an-array-of-numpy-booleans-to-python-booleans-for-serialization
+* https://github.com/JohannesBuchner/imagehash/issues/51
+* https://stackoverflow.com/questions/61791924/how-do-i-convert-an-array-of-numpy-booleans-to-python-booleans-for-serialization
 
 ## Licensing
 
